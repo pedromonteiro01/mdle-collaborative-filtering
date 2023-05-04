@@ -156,7 +156,7 @@ train_clusters = cluster_ratings(train_ds)
 
 # %%
 deviations = sc.parallelize(ratings_test.values) \
-  .map(lambda v: predict_rating(train_ds, train_clusters, v[0], v[1])) \
+  .map(lambda v: abs(predict_rating(train_ds, train_clusters, v[0], v[1]) - v[2])) \
   .reduce(add)
 
 print("Deviation:", deviations/ratings_test_count)
