@@ -140,8 +140,8 @@ ratings_test_count = math.ceil(ratings_count*.1) # number of ratings that will b
 ratings = ratings.sample(frac = 1)
 
 # set 10% of ratings for testing
-ratings_test = ratings[ratings_test_count:]
-ratings_train = ratings[:ratings_test_count]
+ratings_test = ratings[:ratings_test_count]
+ratings_train = ratings[ratings_test_count:]
 
 
 # %% [markdown]
@@ -159,6 +159,6 @@ deviations = sc.parallelize(ratings_test.values) \
   .map(lambda v: abs(predict_rating(train_ds, train_clusters, v[0], v[1]) - v[2])) \
   .reduce(add)
 
-print("Deviation:", deviations/ratings_test_count)
+print("Avg Deviation:", deviations/ratings_test_count)
 
 
